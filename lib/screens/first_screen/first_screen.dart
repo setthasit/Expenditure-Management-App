@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:expenditure_app/models/user.dart';
 import 'package:expenditure_app/repositorys/user_repository.dart';
+import 'package:expenditure_app/screens/dashboard/dashboard.dart';
 import 'package:expenditure_app/screens/main/main.dart';
 import 'package:expenditure_app/screens/signup/signup.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +16,17 @@ class FirstPageScreen extends StatefulWidget {
 
 class FirstPageScreenState extends State<FirstPageScreen> {
   Future checkUserExist () async {
-    User? user = await UserRepository().getUser();
+    User? user = await UserRepository.getUser();
     if (user == null) {
-      Navigator.push(context, MaterialPageRoute(builder: (ctx) => SignUpScreen()));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (ctx) => SignUpScreen(),
+      ));
     } else {
-      Navigator.push(context, MaterialPageRoute(builder: (ctx) => MyHomePage(title: "Test",)));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (ctx) => DashboardScreen(user: user),
+      ));
     }
   }
 

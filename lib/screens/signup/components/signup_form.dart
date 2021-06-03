@@ -6,6 +6,7 @@ import 'package:expenditure_app/helper/exeptions/database/operation_fail.dart';
 import 'package:expenditure_app/helper/snack_bar/snack_bar.dart';
 import 'package:expenditure_app/models/user.dart';
 import 'package:expenditure_app/repositorys/user_repository.dart';
+import 'package:expenditure_app/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -31,10 +32,15 @@ class SignUpFormState extends State<SignUpForm> {
   onSubmitPress () async {
     if (_signupFormKey.currentState!.validate()) {
       try {
-        UserRepository().createUser(User(
+        User user = await UserRepository.createUser(User(
           username: usernameController.text,
           baseIncome: double.parse(incomeController.text),
         ));
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DashboardScreen(user: user))
+        );
       } on TableMigrationException catch (e) {
         errorSnackBar(e.message);
       } on DatabaseConnectionException catch (e) {

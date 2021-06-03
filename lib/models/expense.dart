@@ -20,7 +20,6 @@ class Expense implements Entity {
   @override
   Map<String, dynamic> toMap() {
     return {
-      "id": id,
       "title": title,
       "amount": amount,
     };

@@ -1,13 +1,12 @@
 import 'dart:developer';
 
 import 'package:expenditure_app/config/sqlite_connection.dart';
-import 'package:expenditure_app/helper/exeptions/database/operation_fail.dart';
 import 'package:expenditure_app/models/user.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UserRepository {
 
-  Future<User?> getUser() async {
+  static Future<User?> getUser() async {
     final db = await SqliteConnection.dbProvider.database;
     final List<Map<String, dynamic>> maps = await db.query(
       User.entity.tableName,
@@ -20,7 +19,7 @@ class UserRepository {
     );
   }
 
-  Future<User> createUser(User user) async {
+  static Future<User> createUser(User user) async {
     final db = await SqliteConnection.dbProvider.database;
 
     try {
